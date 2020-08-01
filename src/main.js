@@ -344,9 +344,9 @@ const eventsList = daysListElement.querySelector(`.trip-events__list`);
 
 
 for (let i = 0; i < EVENTS_COUNT; i++) {
-  render(eventsList, createEventElement(), `afterbegin`);
+  render(eventsList, createEventElement(), `beforeend`);
 }
-render(eventsList, createNewEventElement(), `beforeend`);
+render(eventsList, createNewEventElement(), `afterbegin`);
 
 let newEventElement = eventsList.querySelector(`.event--edit`);
 render(newEventElement, createEventDestElement(), `beforeend`);
