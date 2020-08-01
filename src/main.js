@@ -16,7 +16,7 @@ const createWayPriceTemplate = () => {
     </section>`
   );
 };
-npm
+
 const createNavElement = () => {
   return (`  <nav class="trip-controls__trip-tabs  trip-tabs">
   <a class="trip-tabs__btn  trip-tabs__btn--active" href="#">Table</a>
@@ -317,8 +317,8 @@ const createNewEventElement = () => {
   `);
 };
 
-const headerElement = document.querySelector('.page-header');
-const tripElement = headerElement.querySelector('.trip-main');
+const headerElement = document.querySelector(`.page-header`);
+const tripElement = headerElement.querySelector(`.trip-main`);
 
 
 const render = (container, template, place) => {
@@ -327,20 +327,20 @@ const render = (container, template, place) => {
 
 render(tripElement, createWayPriceTemplate(), `afterbegin`);
 
-const navElement = headerElement.querySelector('.trip-controls');
+const navElement = headerElement.querySelector(`.trip-controls`);
 render(navElement, createNavElement(), `afterbegin`);
 render(navElement, createFilterTemplate(), `beforeend`);
 
-const pageMainElement = document.querySelector('.page-main');
-const eventsElement = pageMainElement.querySelector('.trip-events');
+const pageMainElement = document.querySelector(`.page-main`);
+const eventsElement = pageMainElement.querySelector(`.trip-events`);
 
 render(eventsElement, createSortTemplate(), `beforeend`);
 render(eventsElement, createDaysListElement(), `beforeend`);
 
-const daysListElement = pageMainElement.querySelector('.trip-days');
+const daysListElement = pageMainElement.querySelector(`.trip-days`);
 render(daysListElement, createDayElement(), `afterbegin`);
 
-const eventsList = daysListElement.querySelector('.trip-events__list');
+const eventsList = daysListElement.querySelector(`.trip-events__list`);
 
 
 for (let i = 0; i < EVENTS_COUNT; i++) {
@@ -348,5 +348,5 @@ for (let i = 0; i < EVENTS_COUNT; i++) {
 }
 render(eventsList, createNewEventElement(), `beforeend`);
 
-let newEventElement = eventsList.querySelector('.event--edit');
+let newEventElement = eventsList.querySelector(`.event--edit`);
 render(newEventElement, createEventDestElement(), `beforeend`);
