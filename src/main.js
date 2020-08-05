@@ -34,7 +34,14 @@ import {
   createNewEventElement
 } from "./view/new-event.js";
 
-const EVENTS_COUNT = 3;
+import {
+  generateEvent
+} from "./mock/event.js";
+
+const EVENTS_COUNT = 15;
+
+const events = new Array(EVENTS_COUNT).fill().map(generateEvent);
+console.log(events);
 
 const headerElement = document.querySelector(`.page-header`);
 const tripElement = headerElement.querySelector(`.trip-main`);
