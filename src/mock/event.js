@@ -32,14 +32,12 @@ const generateEventType = () => {
   return typeList[randomNumber];
 };
 
-let type = generateEventType();
-
 const generateCity = () => {
   const cityList = [`Stockholm`, `Orebro`, `Oslo`, `Rodal`, `Geiranger`, `Bergen`, `Flam`, `Gudvagen`, `Otta`, `Trondheim`];
   const randomNumber = getRandomInteger(0, cityList.length - 1);
   return cityList[randomNumber];
 };
-const generateIcon = () => {
+const generateIcon = (type) => {
   let url;
   let newStr;
   if (type === `Check`) {
@@ -51,7 +49,7 @@ const generateIcon = () => {
   }
   return (url);
 };
-const generateOption = () => {
+const generateOption = (type) => {
   let ar1 = [`Дополнительный багаж`, `Напиток`, `Повысить класс`, `Страховка`, `Срочность`];
   let ar2 = [`Повысить класс`, `Страховка`, `Завтрак`, `Обед`, `Ужин`];
   let ar3 = [`Аудиогид`, `Паром`, `Завтрак`, `Экскурсия`, `Персональный гид`];
@@ -143,13 +141,14 @@ const generateDate = () => {
 };
 
 export const generateEvent = () => {
+  const type = generateEventType();
   return {
     typeEvent: type,
     city: generateCity(),
-    icon: generateIcon(),
+    icon: generateIcon(type),
     description: generateDescription(),
     descriptionPict: generateDescriptionPict(),
     duration: generateDate(),
-    option: generateOption(),
+    option: generateOption(type),
   };
 };
