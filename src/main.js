@@ -38,6 +38,10 @@ import {
   generateEvent
 } from "./mock/event.js";
 
+import {
+  generateFormEvent
+} from "./mock/event-form.js";
+
 const EVENTS_COUNT = 15;
 
 const events = new Array(EVENTS_COUNT).fill().map(generateEvent);
@@ -69,7 +73,8 @@ const eventsList = daysListElement.querySelector(`.trip-events__list`);
 for (let i = 0; i < EVENTS_COUNT; i++) {
   render(eventsList, createEventElement(events[i]), `beforeend`);
 }
-render(eventsList, createNewEventElement(), `afterbegin`);
+const eventForm = generateFormEvent();
+render(eventsList, createNewEventElement(eventForm), `afterbegin`);
 
 let newEventElement = eventsList.querySelector(`.event--edit`);
 render(newEventElement, createEventDestElement(), `beforeend`);

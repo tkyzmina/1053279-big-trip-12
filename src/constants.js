@@ -1,0 +1,5 @@
+const MAX_DESCRIPTIONS = 5;
+
+export {
+  MAX_DESCRIPTIONS,
+};

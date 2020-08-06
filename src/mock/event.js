@@ -4,9 +4,11 @@ import {
 import {
   getRandomInteger
 } from "../utils.js";
-const MAX_DESCRIPTIONS = 5;
+import {
+  MAX_DESCRIPTIONS
+} from "../constants.js";
 
-const generateDescription = () => {
+export const generateDescription = () => {
   const text = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras aliquet varius magna, non porta ligula feugiat eget. Fusce tristique felis at fermentum pharetra. Aliquam id orci ut lectus varius viverra. Nullam nunc ex, convallis sed finibus eget, sollicitudin eget ante. Phasellus eros mauris, condimentum sed nibh vitae, sodales efficitur ipsum. Sed blandit, eros vel aliquam faucibus, purus ex euismod diam, eu luctus nunc ante ut dui. Sed sed nisi sed augue convallis suscipit in sed felis. Aliquam erat volutpat. Nunc fermentum tortor ac porta dapibus. In rutrum ac purus sit amet tempus.`;
   let separator = `. `;
   let arrText = text.split(separator);
@@ -26,18 +28,18 @@ const generateDescription = () => {
   return (description);
 };
 
-const generateEventType = () => {
+export const generateEventType = () => {
   const typeList = [`Taxi`, `Bus`, `Train`, `Ship`, `Transport`, `Drive`, `Flight`, `Check`, `Sightseeing`, `Restaurant`];
   const randomNumber = getRandomInteger(0, typeList.length - 1);
   return typeList[randomNumber];
 };
 
-const generateCity = () => {
+export const generateCity = () => {
   const cityList = [`Stockholm`, `Orebro`, `Oslo`, `Rodal`, `Geiranger`, `Bergen`, `Flam`, `Gudvagen`, `Otta`, `Trondheim`];
   const randomNumber = getRandomInteger(0, cityList.length - 1);
   return cityList[randomNumber];
 };
-const generateIcon = (type) => {
+export const generateIcon = (type) => {
   let url;
   let newStr;
   if (type === `Check`) {
@@ -49,7 +51,7 @@ const generateIcon = (type) => {
   }
   return (url);
 };
-const generateOption = (type) => {
+export const generateOption = (type) => {
   let ar1 = [`Дополнительный багаж`, `Напиток`, `Повысить класс`, `Страховка`, `Срочность`];
   let ar2 = [`Повысить класс`, `Страховка`, `Завтрак`, `Обед`, `Ужин`];
   let ar3 = [`Аудиогид`, `Паром`, `Завтрак`, `Экскурсия`, `Персональный гид`];
@@ -106,7 +108,7 @@ const generateOption = (type) => {
   return (objOption);
 };
 
-const generateDescriptionPict = () => {
+export const generateDescriptionPict = () => {
   let picturesArray = [];
   let randomNumber = getRandomInteger(0, MAX_DESCRIPTIONS);
   let pictArray = [];
@@ -168,7 +170,7 @@ const generatePrice = () => {
   return randomPrice;
 };
 
-const generateParticle = (type) => {
+export const generateParticle = (type) => {
   let particle;
   if (type === `Check` || type === `Sightseeing` || type === `Restaurant`) {
     particle = `in`;
