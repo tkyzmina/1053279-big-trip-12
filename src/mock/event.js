@@ -42,10 +42,10 @@ const generateIcon = (type) => {
   let newStr;
   if (type === `Check`) {
     newStr = type[0].toLowerCase() + type.slice(1);
-    url = `icons/${newStr}-in.png`;
+    url = `img/icons/${newStr}-in.png`;
   } else {
     newStr = type[0].toLowerCase() + type.slice(1);
-    url = `icons/${newStr}.png`;
+    url = `img/icons/${newStr}.png`;
   }
   return (url);
 };
@@ -116,28 +116,63 @@ const generateDescriptionPict = () => {
 };
 
 const generateDate = () => {
-  const dayGap = 5;
-  const timeGap = 24;
-  const randomDuration = getRandomInteger(0, dayGap);
+  const dayGap = 2;
+  const timeGap = 23;
+  const hourGap = 23;
+  const minGap = 60;
+  const randomStart = getRandomInteger(0, dayGap);
+  const randomDuration = getRandomInteger((randomStart), (randomStart + dayGap));
   const randomHour = getRandomInteger(0, timeGap);
-  const randomMinSek = getRandomInteger(0, 60);
+  const randomMinSek = getRandomInteger(1, 60);
 
   const currentDate = new Date();
-  currentDate.setHours(randomHour, randomMinSek, randomMinSek, 999);
 
   const startDay = new Date();
   startDay.setHours(randomHour, randomMinSek, randomMinSek, 999);
+  startDay.setDate(currentDate.getDate() + randomStart);
 
-  let finishDay = new Date();
-  finishDay.setHours(getRandomInteger(0, timeGap), getRandomInteger(0, 60), getRandomInteger(0, 60), 999);
+  const finishDay = new Date();
+  finishDay.setHours(getRandomInteger(startDay.getHours(), hourGap), getRandomInteger(startDay.getMinutes(), minGap), randomMinSek, 999);
+  finishDay.setDate(startDay.getDate() + randomDuration);
 
-  startDay.setDate(currentDate.getDate() + randomDuration);
-  finishDay.setDate((currentDate.getDate() + dayGap) - (currentDate.getDate() + randomDuration));
+  let period = (finishDay - startDay);
+
+  let days = parseInt(period / (1000 * 60 * 60 * 24), 10);
+  let hours = parseInt((period / (1000 * 60 * 60)) % 24, 10);
+  let min = parseInt((period / (1000 * 60)) % 60, 10);
+  let itemDuration;
+
+  if (days === 0) {
+    itemDuration = `${hours}H ${min}M`;
+  } else if (days === 0 && hours === 0) {
+    itemDuration = `${min}M`;
+  } else if (hours === 0) {
+    itemDuration = `${days}D ${min}M`;
+  } else {
+    itemDuration = `${days}D ${hours}H ${min}M`;
+  }
+
   let duration = {
     start: startDay,
-    finish: finishDay
+    finish: finishDay,
+    durationTime: itemDuration
   };
   return (duration);
+};
+
+const generatePrice = () => {
+  let randomPrice = (getRandomInteger(1, 50) * 10);
+  return randomPrice;
+};
+
+const generateParticle = (type) => {
+  let particle;
+  if (type === `Check` || type === `Sightseeing` || type === `Restaurant`) {
+    particle = `in`;
+  } else {
+    particle = `to`;
+  }
+  return particle;
 };
 
 export const generateEvent = () => {
@@ -150,5 +185,7 @@ export const generateEvent = () => {
     descriptionPict: generateDescriptionPict(),
     duration: generateDate(),
     option: generateOption(type),
+    price: generatePrice(),
+    particle: generateParticle(type)
   };
 };

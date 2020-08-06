@@ -41,7 +41,6 @@ import {
 const EVENTS_COUNT = 15;
 
 const events = new Array(EVENTS_COUNT).fill().map(generateEvent);
-console.log(events);
 
 const headerElement = document.querySelector(`.page-header`);
 const tripElement = headerElement.querySelector(`.trip-main`);
@@ -68,7 +67,7 @@ render(daysListElement, createDayElement(), `afterbegin`);
 const eventsList = daysListElement.querySelector(`.trip-events__list`);
 
 for (let i = 0; i < EVENTS_COUNT; i++) {
-  render(eventsList, createEventElement(), `beforeend`);
+  render(eventsList, createEventElement(events[i]), `beforeend`);
 }
 render(eventsList, createNewEventElement(), `afterbegin`);
 
