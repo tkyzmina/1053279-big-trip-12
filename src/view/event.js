@@ -5,9 +5,30 @@ export const createEventElement = (event) => {
     icon,
     price,
     particle,
-    duration
+    duration,
   } = event;
 
+  const dateStart = duration.start !== null ?
+    duration.start.toLocaleString(`en-US`, {
+      hour12: false,
+      year: `numeric`,
+      month: `long`,
+      day: `numeric`,
+      hour: `2-digit`,
+      minute: `2-digit`,
+      second: `2-digit`,
+    }) : ``;
+
+  const dateEnd = duration.start !== null ?
+    duration.finish.toLocaleString(`en-US`, {
+      hour12: false,
+      year: `numeric`,
+      month: `long`,
+      day: `numeric`,
+      hour: `2-digit`,
+      minute: `2-digit`,
+      second: `2-digit`,
+    }) : ``;
 
   return (` <li class="trip-events__item">
     <div class="event">
@@ -18,9 +39,9 @@ export const createEventElement = (event) => {
   
       <div class="event__schedule">
         <p class="event__time">
-          <time class="event__start-time" datetime="2019-03-18T10:30">${duration.start.getHours()}:${duration.start.getMinutes()}</time>
+          <time class="event__start-time" datetime="${dateStart}">${duration.start.getHours()}:${duration.start.getMinutes()}</time>
           &mdash;
-          <time class="event__end-time" datetime="2019-03-18T11:00">${duration.finish.getHours()}:${duration.finish.getMinutes()}</time>
+          <time class="event__end-time" datetime="${dateEnd}">${duration.finish.getHours()}:${duration.finish.getMinutes()}</time>
         </p>
         <p class="event__duration">${duration.durationTime}</p>
       </div>
@@ -43,5 +64,5 @@ export const createEventElement = (event) => {
       </button>
     </div>
   </li>
-    `);
+      `);
 };

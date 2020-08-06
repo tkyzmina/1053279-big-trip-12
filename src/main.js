@@ -45,7 +45,7 @@ const events = new Array(EVENTS_COUNT).fill().map(generateEvent);
 const headerElement = document.querySelector(`.page-header`);
 const tripElement = headerElement.querySelector(`.trip-main`);
 
-const render = (container, template, place) => {
+export const render = (container, template, place) => {
   container.insertAdjacentHTML(place, template);
 };
 

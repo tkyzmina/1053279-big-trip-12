@@ -107,10 +107,12 @@ const generateOption = (type) => {
 };
 
 const generateDescriptionPict = () => {
-  const picturesArray = [];
+  let picturesArray = [];
   let randomNumber = getRandomInteger(0, MAX_DESCRIPTIONS);
+  let pictArray = [];
   for (let i = 0; i <= randomNumber; i++) {
-    picturesArray.push(`http://picsum.photos/248/152?r=${Math.random()}`);
+    pictArray.push(`<img class="event__photo" src="http://picsum.photos/248/152?r=${Math.random()}"alt="Event photo">`);
+    picturesArray = pictArray.join(`\n`);
   }
   return (picturesArray);
 };
@@ -159,6 +161,7 @@ const generateDate = () => {
   };
   return (duration);
 };
+
 
 const generatePrice = () => {
   let randomPrice = (getRandomInteger(1, 50) * 10);
