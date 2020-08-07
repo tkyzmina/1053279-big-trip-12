@@ -1,3 +1,14 @@
+const createEventOption = (option) => {
+  const optionEventTemplate = Object.entries(option).map(([name, price]) =>
+    `<li class = "event__offer">
+  <span class = "event__offer-title"> ${name} </span>
+   &plus; &euro; &nbsp;
+    <span class = "event__offer-price"> ${price} </span> 
+  </li>`).join(``);
+  return optionEventTemplate;
+};
+
+
 export const createEventElement = (event) => {
   const {
     typeEvent,
@@ -6,6 +17,7 @@ export const createEventElement = (event) => {
     price,
     particle,
     duration,
+    option
   } = event;
 
   const dateStart = duration.start !== null ?
@@ -29,6 +41,7 @@ export const createEventElement = (event) => {
       minute: `2-digit`,
       second: `2-digit`,
     }) : ``;
+  const eventOptionTemplate = createEventOption(option);
 
   return (` <li class="trip-events__item">
     <div class="event">
@@ -52,11 +65,7 @@ export const createEventElement = (event) => {
   
       <h4 class="visually-hidden">Offers:</h4>
       <ul class="event__selected-offers">
-        <li class="event__offer">
-          <span class="event__offer-title">Order Uber</span>
-          &plus;
-          &euro;&nbsp;<span class="event__offer-price">20</span>
-         </li>
+      ${eventOptionTemplate}
       </ul>
   
       <button class="event__rollup-btn" type="button">

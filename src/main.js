@@ -27,10 +27,6 @@ import {
 } from "./view/event.js";
 
 import {
-  createEventDestElement
-} from "./view/event-dest.js";
-
-import {
   createNewEventElement
 } from "./view/new-event.js";
 
@@ -75,6 +71,3 @@ for (let i = 0; i < EVENTS_COUNT; i++) {
 }
 const eventForm = generateFormEvent();
 render(eventsList, createNewEventElement(eventForm), `afterbegin`);
-
-// let newEventElement = eventsList.querySelector(`.event--edit`);
-// render(newEventElement, createEventDestElement(), `beforeend`);
