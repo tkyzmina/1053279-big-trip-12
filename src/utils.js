@@ -11,3 +11,7 @@ export const shuffleArray = (array) => {
     [array[i], array[j]] = [array[j], array[i]];
   }
 };
+
+export const insertDash = (str) => {
+  return str.trim().replace(/[^a-zA-Z0-9 -]/, ``).replace(/\s/g, ` — `);
+};

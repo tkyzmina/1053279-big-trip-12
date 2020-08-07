@@ -44,5 +44,3 @@ export const generateFormEvent = () => {
     destCityList: cityList
   };
 };
-
-console.log(generateFormEvent());

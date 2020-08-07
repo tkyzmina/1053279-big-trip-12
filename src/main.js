@@ -49,8 +49,6 @@ export const render = (container, template, place) => {
   container.insertAdjacentHTML(place, template);
 };
 
-render(tripElement, createWayPriceTemplate(), `afterbegin`);
-
 const navElement = headerElement.querySelector(`.trip-controls`);
 render(navElement, createNavElement(), `afterbegin`);
 render(navElement, createFilterTemplate(), `beforeend`);
@@ -71,3 +69,4 @@ for (let i = 0; i < EVENTS_COUNT; i++) {
 }
 const eventForm = generateFormEvent();
 render(eventsList, createNewEventElement(eventForm), `afterbegin`);
+render(tripElement, createWayPriceTemplate(events), `afterbegin`);
