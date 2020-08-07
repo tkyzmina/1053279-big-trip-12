@@ -20,6 +20,10 @@ import {
   generateDescriptionPict
 } from "./event.js";
 
+import {
+  cityList
+} from "../constants.js";
+
 const generateDate = () => {
   const currentDate = new Date();
   return (currentDate);
@@ -37,6 +41,7 @@ export const generateFormEvent = () => {
     destDate: generateDate(),
     destOption: generateOption(type),
     destParticle: generateParticle(type),
+    destCityList: cityList
   };
 };
 

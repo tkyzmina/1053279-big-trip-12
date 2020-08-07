@@ -7,6 +7,9 @@ import {
 import {
   MAX_DESCRIPTIONS
 } from "../constants.js";
+import {
+  cityList
+} from "../constants.js";
 
 export const generateDescription = () => {
   const text = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras aliquet varius magna, non porta ligula feugiat eget. Fusce tristique felis at fermentum pharetra. Aliquam id orci ut lectus varius viverra. Nullam nunc ex, convallis sed finibus eget, sollicitudin eget ante. Phasellus eros mauris, condimentum sed nibh vitae, sodales efficitur ipsum. Sed blandit, eros vel aliquam faucibus, purus ex euismod diam, eu luctus nunc ante ut dui. Sed sed nisi sed augue convallis suscipit in sed felis. Aliquam erat volutpat. Nunc fermentum tortor ac porta dapibus. In rutrum ac purus sit amet tempus.`;
@@ -25,6 +28,7 @@ export const generateDescription = () => {
 
   const randomIndex = getRandomInteger(0, MAX_DESCRIPTIONS);
   let description = arrDescriptions.slice(0, randomIndex);
+  description = description.join(` `);
   return (description);
 };
 
@@ -35,7 +39,6 @@ export const generateEventType = () => {
 };
 
 export const generateCity = () => {
-  const cityList = [`Stockholm`, `Orebro`, `Oslo`, `Rodal`, `Geiranger`, `Bergen`, `Flam`, `Gudvagen`, `Otta`, `Trondheim`];
   const randomNumber = getRandomInteger(0, cityList.length - 1);
   return cityList[randomNumber];
 };
@@ -52,9 +55,9 @@ export const generateIcon = (type) => {
   return (url);
 };
 export const generateOption = (type) => {
-  let ar1 = [`Дополнительный багаж`, `Напиток`, `Повысить класс`, `Страховка`, `Срочность`];
-  let ar2 = [`Повысить класс`, `Страховка`, `Завтрак`, `Обед`, `Ужин`];
-  let ar3 = [`Аудиогид`, `Паром`, `Завтрак`, `Экскурсия`, `Персональный гид`];
+  let ar1 = [`Luggage`, `Drink`, `Upgrade class`, `Insurance`, `Urgent`];
+  let ar2 = [`Upgrade class`, `Insurance`, `Breakfast`, `Lunch`, `Breakfast`];
+  let ar3 = [`Audioguide`, `Rent car`, `Breakfast`, `Excursion`, `Personal guide`];
   let chosedOptionsArray;
 
   switch (type) {
