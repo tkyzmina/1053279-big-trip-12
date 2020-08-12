@@ -20,6 +20,20 @@ const createOption = (destOption) => {
   return optionTemplate;
 };
 
+const formateDate = (date) => {
+  let formattedDate = date !== null ?
+    date.toLocaleString(`en-GB`, {
+      hour12: false,
+      useGrouping: false,
+      year: `2-digit`,
+      month: `2-digit`,
+      day: `2-digit`,
+      hour: `2-digit`,
+      minute: `2-digit`
+    }).replace(/,/g, ``) : ``;
+  return formattedDate;
+};
+
 export const createNewEventElement = (event) => {
   const {
     typeEvent,
@@ -35,16 +49,7 @@ export const createNewEventElement = (event) => {
 
   const destinationTemplate = createCityList(destCityList);
   const optionTemplate = createOption(option);
-  const date = duration.date !== null ?
-    duration.date.toLocaleString(`en-US`, {
-      hour12: false,
-      useGrouping: false,
-      year: `2-digit`,
-      month: `2-digit`,
-      day: `2-digit`,
-      hour: `2-digit`,
-      minute: `2-digit`
-    }).replace(/,/g, ``) : ``;
+  const date = formateDate(duration.date);
 
   return (` <form class="trip-events__item  event  event--edit" action="#" method="post">
   <header class="event__header">

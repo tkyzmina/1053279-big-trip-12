@@ -8,6 +8,19 @@ const createEventOption = (option) => {
   return optionEventTemplate;
 };
 
+const formateDate = (date) => {
+  let formattedDate = date !== null ?
+    date.toLocaleString(`en-US`, {
+      hour12: false,
+      year: `numeric`,
+      month: `long`,
+      day: `numeric`,
+      hour: `2-digit`,
+      minute: `2-digit`,
+      second: `2-digit`,
+    }) : ``;
+  return formattedDate;
+};
 
 export const createEventElement = (event) => {
   const {
@@ -20,27 +33,8 @@ export const createEventElement = (event) => {
     option
   } = event;
 
-  const dateStart = duration.start !== null ?
-    duration.start.toLocaleString(`en-US`, {
-      hour12: false,
-      year: `numeric`,
-      month: `long`,
-      day: `numeric`,
-      hour: `2-digit`,
-      minute: `2-digit`,
-      second: `2-digit`,
-    }) : ``;
-
-  const dateEnd = duration.start !== null ?
-    duration.finish.toLocaleString(`en-US`, {
-      hour12: false,
-      year: `numeric`,
-      month: `long`,
-      day: `numeric`,
-      hour: `2-digit`,
-      minute: `2-digit`,
-      second: `2-digit`,
-    }) : ``;
+  const dateStart = formateDate(duration.start);
+  const dateEnd = formateDate(duration.finish);
   const eventOptionTemplate = createEventOption(option);
 
   return (` <li class="trip-events__item">

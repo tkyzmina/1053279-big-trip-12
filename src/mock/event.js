@@ -10,26 +10,20 @@ import {
 import {
   cityList
 } from "../constants.js";
+import {
+  options
+} from "../constants.js";
 
 export const generateDescription = () => {
   const text = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras aliquet varius magna, non porta ligula feugiat eget. Fusce tristique felis at fermentum pharetra. Aliquam id orci ut lectus varius viverra. Nullam nunc ex, convallis sed finibus eget, sollicitudin eget ante. Phasellus eros mauris, condimentum sed nibh vitae, sodales efficitur ipsum. Sed blandit, eros vel aliquam faucibus, purus ex euismod diam, eu luctus nunc ante ut dui. Sed sed nisi sed augue convallis suscipit in sed felis. Aliquam erat volutpat. Nunc fermentum tortor ac porta dapibus. In rutrum ac purus sit amet tempus.`;
-  let separator = `. `;
-  let arrText = text.split(separator);
-  let arrDescriptions = [];
-  for (let string of arrText) {
-    for (let symbol of string) {
-      if (string[string.length - 1] !== `.`) {
-        string = string + `.`;
-        arrDescriptions.push(string);
-      }
-    }
-  }
-  shuffleArray(arrDescriptions);
-
+  let description = ``;
+  let arrText = text.split(/\.\s*/g).filter((s) => s);
+  shuffleArray(arrText);
   const randomIndex = getRandomInteger(0, MAX_DESCRIPTIONS);
-  let description = arrDescriptions.slice(0, randomIndex);
-  description = description.join(` `);
-  return (description);
+  if (randomIndex > 0) {
+    description = `${arrText.slice(0, randomIndex).join(`. `)}.`;
+  }
+  return description;
 };
 
 export const generateEventType = () => {
@@ -42,6 +36,7 @@ export const generateCity = () => {
   const randomNumber = getRandomInteger(0, cityList.length - 1);
   return cityList[randomNumber];
 };
+
 export const generateIcon = (type) => {
   let url;
   let newStr;
@@ -54,46 +49,30 @@ export const generateIcon = (type) => {
   }
   return (url);
 };
+
 export const generateOption = (type) => {
-  const ar1 = [`Luggage`, `Drink`, `Upgrade class`, `Insurance`, `Urgent`];
-  const ar2 = [`Upgrade class`, `Insurance`, `Breakfast`, `Lunch`, `Breakfast`];
-  const ar3 = [`Audioguide`, `Rent car`, `Breakfast`, `Excursion`, `Personal guide`];
   let chosedOptionsArray;
 
   switch (type) {
     case `Taxi`:
-      chosedOptionsArray = ar1;
-      break;
     case `Bus`:
-      chosedOptionsArray = ar1;
-      break;
     case `Train`:
-      chosedOptionsArray = ar1;
-      break;
     case `Ship`:
-      chosedOptionsArray = ar1;
-      break;
     case `Transport`:
-      chosedOptionsArray = ar1;
-      break;
     case `Drive`:
-      chosedOptionsArray = ar1;
+      chosedOptionsArray = options.ar1.slice();
       break;
     case `Flight`:
-      chosedOptionsArray = ar2;
-      break;
     case `Check`:
-      chosedOptionsArray = ar2;
+    case `Restaurant`:
+      chosedOptionsArray = options.ar2.slice();
       break;
     case `Sightseeing`:
-      chosedOptionsArray = ar3;
-      break;
-    case `Restaurant`:
-      chosedOptionsArray = ar2;
+      chosedOptionsArray = options.ar3.slice();
       break;
   }
-  let maxOptions = 5;
-  let randomNumber = getRandomInteger(0, maxOptions);
+  const maxOptions = 5;
+  const randomNumber = getRandomInteger(0, maxOptions);
 
   let priceArray = [];
   let newPrice = ``;
@@ -112,8 +91,8 @@ export const generateOption = (type) => {
 };
 
 export const generateDescriptionPict = () => {
+  const randomNumber = getRandomInteger(1, MAX_DESCRIPTIONS);
   let picturesArray = [];
-  let randomNumber = getRandomInteger(1, MAX_DESCRIPTIONS);
   let pictArray = [];
   for (let i = 1; i <= randomNumber; i++) {
     pictArray.push(`<img class="event__photo" src="http://picsum.photos/248/152?r=${Math.random()}"alt="Event photo">`);
@@ -142,24 +121,25 @@ const generateDate = () => {
   finishDay.setHours(getRandomInteger(startDay.getHours(), hourGap), getRandomInteger(startDay.getMinutes(), minGap), randomMinSek, 999);
   finishDay.setDate(startDay.getDate() + randomDuration);
 
-  let period = (finishDay - startDay);
+  const period = (finishDay - startDay);
 
   let days = parseInt(period / (1000 * 60 * 60 * 24), 10);
   let hours = parseInt((period / (1000 * 60 * 60)) % 24, 10);
   let min = parseInt((period / (1000 * 60)) % 60, 10);
-  let itemDuration;
 
-  if (days === 0) {
-    itemDuration = `${hours}H ${min}M`;
-  } else if (days === 0 && hours === 0) {
-    itemDuration = `${min}M`;
-  } else if (hours === 0) {
-    itemDuration = `${days}D ${min}M`;
-  } else {
-    itemDuration = `${days}D ${hours}H ${min}M`;
+  let itemDuration = ``;
+  const timeMap = new Map();
+  timeMap.set(`D`, days);
+  timeMap.set(`H`, hours);
+  timeMap.set(`M`, min);
+
+  for (let key of timeMap) {
+    if (key[1] !== 0) {
+      itemDuration += `${key[1]}${key[0]} `;
+    }
   }
 
-  let duration = {
+  const duration = {
     date: currentDate,
     start: startDay,
     finish: finishDay,
@@ -168,9 +148,8 @@ const generateDate = () => {
   return (duration);
 };
 
-
 const generatePrice = () => {
-  let randomPrice = (getRandomInteger(1, 50) * 10);
+  const randomPrice = (getRandomInteger(1, 50) * 10);
   return randomPrice;
 };
 

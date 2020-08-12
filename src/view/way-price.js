@@ -11,7 +11,6 @@ const makeCitySet = (array) => {
   for (let value of set) {
     infoTitle += `${value} `;
   }
-  // insertDash(infoTitle); вызывала так и не работало - тире не ставилось, завела доп переменную. return infoTitle - был  Почему не раб?
   let line = insertDash(infoTitle);
   return line;
 };
@@ -38,20 +37,20 @@ const makeTripDates = (array) => {
   };
 
   array.forEach((element) => {
-    let dateFin = dateChangeView(element.duration.finish);
-    let dateStart = dateChangeView(element.duration.start);
+    const dateFin = dateChangeView(element.duration.finish);
+    const dateStart = dateChangeView(element.duration.start);
     dateArray.push(dateFin);
     dateArray.push(dateStart);
   });
 
   dateArray.sort();
-  let dateDurationString = `${dateArray[0]} — ${dateArray[dateArray.length - 1]} `;
+  const dateDurationString = `${dateArray[0]} — ${dateArray[dateArray.length - 1]} `;
   return dateDurationString;
 };
 
 
 export const createWayPriceTemplate = (events) => {
-  console.log(events);
+  // console.log(events);
   makeTripDates(events);
   const cityTemplate = makeCitySet(events);
   const price = makeTotalPrice(events);
