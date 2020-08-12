@@ -55,9 +55,9 @@ export const generateIcon = (type) => {
   return (url);
 };
 export const generateOption = (type) => {
-  let ar1 = [`Luggage`, `Drink`, `Upgrade class`, `Insurance`, `Urgent`];
-  let ar2 = [`Upgrade class`, `Insurance`, `Breakfast`, `Lunch`, `Breakfast`];
-  let ar3 = [`Audioguide`, `Rent car`, `Breakfast`, `Excursion`, `Personal guide`];
+  const ar1 = [`Luggage`, `Drink`, `Upgrade class`, `Insurance`, `Urgent`];
+  const ar2 = [`Upgrade class`, `Insurance`, `Breakfast`, `Lunch`, `Breakfast`];
+  const ar3 = [`Audioguide`, `Rent car`, `Breakfast`, `Excursion`, `Personal guide`];
   let chosedOptionsArray;
 
   switch (type) {
@@ -113,9 +113,9 @@ export const generateOption = (type) => {
 
 export const generateDescriptionPict = () => {
   let picturesArray = [];
-  let randomNumber = getRandomInteger(0, MAX_DESCRIPTIONS);
+  let randomNumber = getRandomInteger(1, MAX_DESCRIPTIONS);
   let pictArray = [];
-  for (let i = 0; i <= randomNumber; i++) {
+  for (let i = 1; i <= randomNumber; i++) {
     pictArray.push(`<img class="event__photo" src="http://picsum.photos/248/152?r=${Math.random()}"alt="Event photo">`);
     picturesArray = pictArray.join(`\n`);
   }
@@ -160,6 +160,7 @@ const generateDate = () => {
   }
 
   let duration = {
+    date: currentDate,
     start: startDay,
     finish: finishDay,
     durationTime: itemDuration
@@ -188,6 +189,7 @@ export const generateEvent = () => {
   return {
     typeEvent: type,
     city: generateCity(),
+    destCityList: cityList,
     icon: generateIcon(type),
     description: generateDescription(),
     descriptionPict: generateDescriptionPict(),

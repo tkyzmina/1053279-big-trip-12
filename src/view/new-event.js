@@ -22,22 +22,21 @@ const createOption = (destOption) => {
 
 export const createNewEventElement = (event) => {
   const {
-    destTypeEvent,
-    destCity,
-    destIcon,
-    destDescription,
-    destdDscriptionPict,
-    destDate,
-    destOption,
-    destParticle,
-    destCityList
+    typeEvent,
+    city,
+    icon,
+    particle,
+    duration,
+    option,
+    destCityList,
+    description,
+    descriptionPict
   } = event;
 
   const destinationTemplate = createCityList(destCityList);
-  const optionTemplate = createOption(destOption);
-
-  const date = destDate !== null ?
-    destDate.toLocaleString(`en-US`, {
+  const optionTemplate = createOption(option);
+  const date = duration.date !== null ?
+    duration.date.toLocaleString(`en-US`, {
       hour12: false,
       useGrouping: false,
       year: `2-digit`,
@@ -52,7 +51,7 @@ export const createNewEventElement = (event) => {
     <div class="event__type-wrapper">
       <label class="event__type  event__type-btn" for="event-type-toggle-1">
         <span class="visually-hidden">Choose event type</span>
-        <img class="event__type-icon" width="17" height="17" src="${destIcon}" alt="Event type icon">
+        <img class="event__type-icon" width="17" height="17" src="${icon}" alt="Event type icon">
       </label>
       <input class="event__type-toggle  visually-hidden" id="event-type-toggle-1" type="checkbox">
 
@@ -133,10 +132,10 @@ export const createNewEventElement = (event) => {
 
     <div class="event__field-group  event__field-group--destination">
       <label class="event__label  event__type-output" for="event-destination-1">
-        ${destTypeEvent} ${destParticle}
+        ${typeEvent} ${particle}
       </label>
       <input class="event__input  event__input--destination" id="event-destination-1" type="text"
-        name="event-destination" value="${destCity}" list="destination-list-1">
+        name="event-destination" value="${city}" list="destination-list-1">
       <datalist id="destination-list-1">
         ${destinationTemplate}
       </datalist>
@@ -178,11 +177,11 @@ export const createNewEventElement = (event) => {
 
     <section class="event__section  event__section--destination">
       <h3 class="event__section-title  event__section-title--destination">Destination</h3>
-      <p class="event__destination-description">${destDescription}</p>
+      <p class="event__destination-description">${description}</p>
 
       <div class="event__photos-container">
         <div class="event__photos-tape">
-         ${destdDscriptionPict}
+         ${descriptionPict}
         </div>
       </div>
     </section>
