@@ -1,6 +1,7 @@
 import {
   insertDash
 } from "../utils.js";
+import {createElement} from "../utils.js";
 
 const makeCitySet = (array) => {
   let set = new Set();
@@ -48,16 +49,13 @@ const makeTripDates = (array) => {
   return dateDurationString;
 };
 
-
-export const createWayPriceTemplate = (events) => {
+const createTripInfoTemplate = (events) => {
   // console.log(events);
-  makeTripDates(events);
+
   const cityTemplate = makeCitySet(events);
   const price = makeTotalPrice(events);
   const date = makeTripDates(events);
-  return (
-    ` <div class="trip-main">
-      <section class="trip-main__trip-info  trip-info">
+  return (`<section class="trip-main__trip-info  trip-info">
         <div class="trip-info__main">
           <h1 class="trip-info__title"> ${cityTemplate}</h1>
   
@@ -70,3 +68,26 @@ export const createWayPriceTemplate = (events) => {
       </section>`
   );
 };
+
+export default class TripInfo {
+  constructor(events) {
+    this._element = null;
+    this._events = events;
+  }
+
+  getTemplate() {
+    return createTripInfoTemplate(this._events);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

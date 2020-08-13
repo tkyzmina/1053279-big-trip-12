@@ -1,6 +1,7 @@
-import {
-  createWayPriceTemplate
-} from "./view/way-price.js";
+// import {
+//   createWayPriceTemplate
+// } from "./view/trip-info.js";
+import TripInfoView from "./view/trip-info.js";
 
 import {
   createNavElement
@@ -34,35 +35,41 @@ import {
   generateEvent
 } from "./mock/event.js";
 
+import {
+  render,
+  RenderPosition
+} from "./utils.js";
+
+import {
+  renderTemplate
+} from "./utils.js";
+
 const EVENTS_COUNT = 15;
 
 const events = new Array(EVENTS_COUNT).fill().map(generateEvent);
 
 const headerElement = document.querySelector(`.page-header`);
-const tripElement = headerElement.querySelector(`.trip-main`);
 
-export const render = (container, template, place) => {
-  container.insertAdjacentHTML(place, template);
-};
-
+const headerMainInfo = headerElement.querySelector(`.trip-main`);
 const navElement = headerElement.querySelector(`.trip-controls`);
-render(navElement, createNavElement(), `afterbegin`);
-render(navElement, createFilterTemplate(), `beforeend`);
+
+renderTemplate(navElement, createNavElement(), `afterbegin`);
+renderTemplate(navElement, createFilterTemplate(), `beforeend`);
 
 const pageMainElement = document.querySelector(`.page-main`);
 const eventsElement = pageMainElement.querySelector(`.trip-events`);
 
-render(eventsElement, createSortTemplate(), `beforeend`);
-render(eventsElement, createDaysListElement(), `beforeend`);
+renderTemplate(eventsElement, createSortTemplate(), `beforeend`);
+renderTemplate(eventsElement, createDaysListElement(), `beforeend`);
 
 const daysListElement = pageMainElement.querySelector(`.trip-days`);
-render(daysListElement, createDayElement(), `afterbegin`);
+renderTemplate(daysListElement, createDayElement(), `afterbegin`);
 
 const eventsList = daysListElement.querySelector(`.trip-events__list`);
 
 for (let i = 0; i < EVENTS_COUNT; i++) {
-  render(eventsList, createEventElement(events[i]), `beforeend`);
+  renderTemplate(eventsList, createEventElement(events[i]), `beforeend`);
 }
 const eventForm = generateEvent();
-render(eventsList, createNewEventElement(eventForm), `afterbegin`);
-render(tripElement, createWayPriceTemplate(events), `afterbegin`);
+renderTemplate(eventsList, createNewEventElement(eventForm), `afterbegin`);
+render(headerMainInfo, new TripInfoView(events).getElement(), RenderPosition.AFTERBEGIN);
