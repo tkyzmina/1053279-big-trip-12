@@ -1,4 +1,6 @@
-import {createElement} from "../utils.js";
+import {
+  createElement
+} from "../utils.js";
 const createCityList = (cityList) => {
   let destinationList = cityList.map((city) => {
     return `<option value = "${city}"> </option>`;
@@ -52,6 +54,7 @@ const createNewEventElement = (event) => {
     particle,
     duration,
     option,
+    price,
     destCityList,
     description,
     descriptionPict
@@ -174,7 +177,7 @@ const createNewEventElement = (event) => {
     <div class="event__field-group  event__field-group--price">
       <label class="event__label" for="event-price-1">
         <span class="visually-hidden">Price</span>
-        &euro;
+        &euro; ${price}
       </label>
       <input class="event__input  event__input--price" id="event-price-1" type="text" name="event-price"
         value="">
