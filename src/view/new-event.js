@@ -1,3 +1,4 @@
+import {createElement} from "../utils.js";
 const createCityList = (cityList) => {
   let destinationList = cityList.map((city) => {
     return `<option value = "${city}"> </option>`;
@@ -34,7 +35,16 @@ const formateDate = (date) => {
   return formattedDate;
 };
 
-export const createNewEventElement = (event) => {
+const BLANK_EVENT = {
+  typeEvent: `Flight`,
+  city: `Chamonix`,
+  icon: `img/icons/flight.png`,
+  particle: `to`,
+  price: 160,
+  description: `Phasellus eros mauris, condimentum sed nibh vitae, sodales efficitur ipsum.`,
+};
+
+const createNewEventElement = (event) => {
   const {
     typeEvent,
     city,
@@ -49,9 +59,10 @@ export const createNewEventElement = (event) => {
 
   const destinationTemplate = createCityList(destCityList);
   const optionTemplate = createOption(option);
-  const date = formateDate(duration.date);
+  const dateStart = formateDate(duration.start);
+  const dateEnd = formateDate(duration.finish);
 
-  return (` <form class="trip-events__item  event  event--edit" action="#" method="post">
+  return (`<form class="trip-events__item  event  event--edit" action="#" method="post">
   <header class="event__header">
     <div class="event__type-wrapper">
       <label class="event__type  event__type-btn" for="event-type-toggle-1">
@@ -151,13 +162,13 @@ export const createNewEventElement = (event) => {
         From
       </label>
       <input class="event__input  event__input--time" id="event-start-time-1" type="text"
-        name="event-start-time" value="${date}">
+        name="event-start-time" value="${dateStart}">
       &mdash;
       <label class="visually-hidden" for="event-end-time-1">
         To
       </label>
       <input class="event__input  event__input--time" id="event-end-time-1" type="text" name="event-end-time"
-        value="${date}">
+        value="${dateEnd}">
     </div>
 
     <div class="event__field-group  event__field-group--price">
@@ -194,3 +205,26 @@ export const createNewEventElement = (event) => {
 </form>
     `);
 };
+
+export default class NewEvent {
+  constructor(event) {
+    this._event = event || BLANK_EVENT;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createNewEventElement(this._event);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

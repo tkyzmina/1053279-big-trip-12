@@ -1,3 +1,4 @@
+import {createElement} from "../utils.js";
 const createEventOption = (option) => {
   const optionEventTemplate = Object.entries(option).map(([name, price]) =>
     `<li class = "event__offer">
@@ -22,7 +23,7 @@ const formateDate = (date) => {
   return formattedDate;
 };
 
-export const createEventElement = (event) => {
+const createEventElement = (event) => {
   const {
     typeEvent,
     city,
@@ -37,7 +38,7 @@ export const createEventElement = (event) => {
   const dateEnd = formateDate(duration.finish);
   const eventOptionTemplate = createEventOption(option);
 
-  return (` <li class="trip-events__item">
+  return (`<li class="trip-events__item">
     <div class="event">
       <div class="event__type">
         <img class="event__type-icon" width="42" height="42" src="${icon}" alt="Event type icon">
@@ -69,3 +70,26 @@ export const createEventElement = (event) => {
   </li>
       `);
 };
+
+export default class Event {
+  constructor(event) {
+    this._event = event;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createEventElement(this._event);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
