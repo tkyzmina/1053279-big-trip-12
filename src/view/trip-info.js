@@ -1,7 +1,7 @@
 import {
   insertDash
 } from "../utils.js";
-import {createElement} from "../utils.js";
+import AbstractView from "./abstract.js";
 
 const makeCitySet = (array) => {
   let set = new Set();
@@ -65,29 +65,16 @@ const createTripInfoTemplate = (events) => {
         <p class="trip-info__cost">
           Total: &euro;&nbsp;<span class="trip-info__cost-value">${price}</span>
         </p>
-      </section>`
-  );
+      </section>`);
 };
 
-export default class TripInfo {
+export default class TripInfo extends AbstractView {
   constructor(events) {
-    this._element = null;
+    super();
     this._events = events;
   }
 
   getTemplate() {
     return createTripInfoTemplate(this._events);
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

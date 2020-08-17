@@ -1,6 +1,5 @@
-import {
-  createElement
-} from "../utils.js";
+import AbstractView from "./abstract.js";
+
 const createCityList = (cityList) => {
   let destinationList = cityList.map((city) => {
     return `<option value = "${city}"> </option>`;
@@ -209,25 +208,13 @@ const createNewEventElement = (event) => {
     `);
 };
 
-export default class NewEvent {
+export default class NewEvent extends AbstractView {
   constructor(event) {
+    super();
     this._event = event || BLANK_EVENT;
-    this._element = null;
   }
 
   getTemplate() {
     return createNewEventElement(this._event);
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }
