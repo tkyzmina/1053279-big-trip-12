@@ -1,40 +1,9 @@
 import AbstractView from "./abstract.js";
-
-const createCityList = (cityList) => {
-  let destinationList = cityList.map((city) => {
-    return `<option value = "${city}"> </option>`;
-  }).join(``);
-  return destinationList;
-};
-
-const createOption = (destOption) => {
-  const optionTemplate = Object.entries(destOption).map(([option, price]) =>
-    `<div class="event__offer-selector">
-          <input class="event__offer-checkbox  visually-hidden" id="event-offer-${option.toLowerCase()}-1" type="checkbox"
-            name="event-offer-${option.toLowerCase()}">
-          <label class="event__offer-label" for="event-offer-${option.toLowerCase()}-1">
-            <span class="event__offer-title">${option}</span>
-            &plus;
-            &euro;&nbsp;<span class="event__offer-price">${price}</span>
-          </label>
-        </div>`
-  ).join(``);
-  return optionTemplate;
-};
-
-const formateDate = (date) => {
-  let formattedDate = date !== null ?
-    date.toLocaleString(`en-GB`, {
-      hour12: false,
-      useGrouping: false,
-      year: `2-digit`,
-      month: `2-digit`,
-      day: `2-digit`,
-      hour: `2-digit`,
-      minute: `2-digit`
-    }).replace(/,/g, ``) : ``;
-  return formattedDate;
-};
+import {
+  createOption,
+  createCityList,
+  formateNewEventDate
+} from "../utils/event.js";
 
 const BLANK_EVENT = {
   typeEvent: `Flight`,
@@ -61,8 +30,8 @@ const createNewEventElement = (event) => {
 
   const destinationTemplate = createCityList(destCityList);
   const optionTemplate = createOption(option);
-  const dateStart = formateDate(duration.start);
-  const dateEnd = formateDate(duration.finish);
+  const dateStart = formateNewEventDate(duration.start);
+  const dateEnd = formateNewEventDate(duration.finish);
 
   return (`<form class="trip-events__item  event  event--edit" action="#" method="post">
   <header class="event__header">
@@ -212,9 +181,19 @@ export default class NewEvent extends AbstractView {
   constructor(event) {
     super();
     this._event = event || BLANK_EVENT;
+    this._formSubmitHandler = this._formSubmitHandler.bind(this);
   }
 
   getTemplate() {
     return createNewEventElement(this._event);
+  }
+  _formSubmitHandler(evt) {
+    evt.preventDefault();
+    this._callback.formSubmit();
+  }
+
+  setFormSubmitHandler(callback) {
+    this._callback.formSubmit = callback;
+    this.getElement().addEventListener(`submit`, this._formSubmitHandler);
   }
 }

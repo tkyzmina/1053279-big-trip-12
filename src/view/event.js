@@ -1,4 +1,7 @@
 import AbstractView from "./abstract.js";
+import {
+  formateEventDate
+} from "../utils/event.js";
 const createEventOption = (option) => {
   const optionEventTemplate = Object.entries(option).map(([name, price]) =>
     `<li class = "event__offer">
@@ -7,20 +10,6 @@ const createEventOption = (option) => {
     <span class = "event__offer-price"> ${price} </span> 
   </li>`).join(``);
   return optionEventTemplate;
-};
-
-const formateDate = (date) => {
-  let formattedDate = date !== null ?
-    date.toLocaleString(`en-US`, {
-      hour12: false,
-      year: `numeric`,
-      month: `long`,
-      day: `numeric`,
-      hour: `2-digit`,
-      minute: `2-digit`,
-      second: `2-digit`,
-    }) : ``;
-  return formattedDate;
 };
 
 const createEventElement = (event) => {
@@ -34,8 +23,8 @@ const createEventElement = (event) => {
     option
   } = event;
 
-  const dateStart = formateDate(duration.start);
-  const dateEnd = formateDate(duration.finish);
+  const dateStart = formateEventDate(duration.start);
+  const dateEnd = formateEventDate(duration.finish);
   const eventOptionTemplate = createEventOption(option);
 
   return (`<li class="trip-events__item">
@@ -75,9 +64,20 @@ export default class Event extends AbstractView {
   constructor(event) {
     super();
     this._event = event;
+    this._editClickHandler = this._editClickHandler.bind(this);
   }
 
   getTemplate() {
     return createEventElement(this._event);
+  }
+
+  _editClickHandler(evt) {
+    evt.preventDefault();
+    this._callback.editClick();
+  }
+
+  setEditClickHandler(callback) {
+    this._callback.editClick = callback;
+    this.getElement().querySelector(`.event__rollup-btn`).addEventListener(`click`, this._editClickHandler);
   }
 }

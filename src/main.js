@@ -10,16 +10,15 @@ import EventView from "./view/event.js";
 import NewEventView from "./view/new-event.js";
 
 
-import {generateEvent} from "./mock/event.js";
+import {
+  generateEvent
+} from "./mock/event.js";
 
 import {
   render,
-  RenderPosition
-} from "./utils.js";
-
-// import {
-//   renderTemplate
-// } from "./utils.js";
+  RenderPosition,
+  replace
+} from "./utils/render.js";
 
 const EVENTS_COUNT = 15;
 
@@ -32,30 +31,30 @@ const navElement = headerElement.querySelector(`.trip-controls`);
 const pageMainElement = document.querySelector(`.page-main`);
 const eventsElement = pageMainElement.querySelector(`.trip-events`);
 
-render(headerMainInfo, new TripInfoView(events).getElement(), RenderPosition.AFTERBEGIN);
-render(navElement, new NavView().getElement(), RenderPosition.AFTERBEGIN);
-render(navElement, new FilterView().getElement(), RenderPosition.BEFOREEND);
-render(eventsElement, new SortView().getElement(), RenderPosition.AFTERBEGIN);
+render(headerMainInfo, new TripInfoView(events), RenderPosition.AFTERBEGIN);
+render(navElement, new NavView(), RenderPosition.AFTERBEGIN);
+render(navElement, new FilterView(), RenderPosition.BEFOREEND);
+render(eventsElement, new SortView(), RenderPosition.AFTERBEGIN);
 
 const daysListComponent = new DaysListView();
-render(eventsElement, daysListComponent.getElement(), RenderPosition.BEFOREEND);
+render(eventsElement, daysListComponent, RenderPosition.BEFOREEND);
 
 const dayComponent = new DayView();
-render(daysListComponent.getElement(), dayComponent.getElement(), RenderPosition.BEFOREEND);
-render(dayComponent.getElement(), new DayInfoView().getElement(), RenderPosition.AFTERBEGIN);
+render(daysListComponent, dayComponent, RenderPosition.BEFOREEND);
+render(dayComponent, new DayInfoView(), RenderPosition.AFTERBEGIN);
 
 const eventsListComponent = new EventsListView();
-render(dayComponent.getElement(), eventsListComponent.getElement(), RenderPosition.BEFOREEND);
+render(dayComponent, eventsListComponent, RenderPosition.BEFOREEND);
 
 const renderEvent = (eventList, event) => {
   const eventComponent = new EventView(event);
   const eventEditComponent = new NewEventView(event);
 
   const replaceEventToNewEvent = () => {
-    eventList.replaceChild(eventEditComponent.getElement(), eventComponent.getElement());
+    replace(eventEditComponent, eventComponent);
   };
   const replaceNewEventToEvent = () => {
-    eventList.replaceChild(eventComponent.getElement(), eventEditComponent.getElement());
+    replace(eventComponent, eventEditComponent);
   };
 
   const onEscKeyDown = (evt) => {
@@ -76,23 +75,21 @@ const renderEvent = (eventList, event) => {
     }
   };
 
-  eventComponent.getElement().querySelector(`.event__rollup-btn`).addEventListener(`click`, () => {
+  eventComponent.setEditClickHandler(() => {
     replaceEventToNewEvent();
     document.addEventListener(`keydown`, onEscKeyDown);
     document.addEventListener(`click`, onCancel);
   });
 
-  eventEditComponent.getElement().addEventListener(`submit`, (evt) => {
-    evt.preventDefault();
+  eventEditComponent.setFormSubmitHandler(() => {
     replaceNewEventToEvent();
     document.removeEventListener(`keydown`, onEscKeyDown);
     document.removeEventListener(`click`, onCancel);
   });
 
-  render(eventList, eventComponent.getElement(), RenderPosition.BEFOREEND);
+  render(eventList, eventComponent, RenderPosition.BEFOREEND);
 };
 
 for (let i = 0; i < EVENTS_COUNT; i++) {
-  renderEvent(eventsListComponent.getElement(), events[i]);
+  renderEvent(eventsListComponent, events[i]);
 }
-

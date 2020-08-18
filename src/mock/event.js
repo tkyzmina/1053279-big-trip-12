@@ -1,9 +1,9 @@
 import {
+  getRandomInteger,
   shuffleArray
-} from "../utils.js";
-import {
-  getRandomInteger
-} from "../utils.js";
+} from "../utils/common.js";
+
+
 import {
   MAX_DESCRIPTIONS
 } from "../constants.js";
