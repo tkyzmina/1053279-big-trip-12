@@ -153,6 +153,12 @@ const generatePrice = () => {
   return randomPrice;
 };
 
+const isFavotire = () => {
+  let type = Boolean(getRandomInteger());
+  return type;
+};
+
+isFavotire();
 export const generateParticle = (type) => {
   let particle;
   if (type === `Check` || type === `Sightseeing` || type === `Restaurant`) {
@@ -162,6 +168,7 @@ export const generateParticle = (type) => {
   }
   return particle;
 };
+
 
 export const generateEvent = () => {
   const type = generateEventType();
@@ -175,6 +182,7 @@ export const generateEvent = () => {
     duration: generateDate(),
     option: generateOption(type),
     price: generatePrice(),
-    particle: generateParticle(type)
+    particle: generateParticle(type),
+    favorite: isFavotire()
   };
 };

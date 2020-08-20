@@ -10,6 +10,7 @@ import {
   replace
 } from "../utils/render.js";
 const EVENTS_COUNT = 15;
+
 export default class Trip {
   constructor(container) {
     this._container = container;
@@ -72,12 +73,29 @@ export default class Trip {
     });
 
     render(this._eventsListComponent, eventComponent, RenderPosition.BEFOREEND);
+    return (eventComponent);
+  }
+
+  // разбивает массив на дни
+  _groupByDay(array) {
+    const tripDays = new Map();
+
+    for (const event of array.slice()) {
+      const date = new Date(event.duration.start).setHours(0, 0, 0, 0);
+      if (tripDays.has(date)) {
+        tripDays.get(date).push(event);
+      } else {
+        tripDays.set(date, [event]);
+      }
+    }
+    // console.log(tripDays);
+    return tripDays;
   }
 
   _renderEvents(events) {
     for (let i = 0; i < EVENTS_COUNT; i++) {
       this._renderEvent(events[i]);
     }
+    this._groupByDay(events);
   }
-
 }
